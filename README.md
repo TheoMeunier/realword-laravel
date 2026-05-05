@@ -1,58 +1,161 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Conduit — RealWorld Backend API · Laravel 13
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+> A fully featured backend REST API for the [RealWorld](https://github.com/gothinkster/realworld) "Conduit" application (Medium.com clone), built with **Laravel 13**.
 
-## About Laravel
+This codebase was created to demonstrate a real-world backend API built with Laravel 13 including CRUD operations, JWT authentication, routing, pagination, and more. It fully adheres to the [RealWorld API spec](https://realworld-docs.netlify.app/docs/specs/backend-specs/introduction).
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+---
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Tech Stack
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+| Technology          | Version | Purpose |
+|---------------------|---------|---|
+| PHP                 | 8.5+    | Language |
+| Laravel             | 13.x    | Framework |
+| MySQL / Postgres 17 | —       | Database |
+| Laravel Sanctum     | —       | API token authentication |
+| Eloquent ORM        | —       | Database abstraction |
+| Pest                | 11.x    | Testing |
 
-## Learning Laravel
+---
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## API Endpoints
 
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+The API is mounted at `/api` and implements the full RealWorld spec:
 
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
+| Method | Endpoint | Auth | Description |
+|---|---|---|---|
+| `POST` | `/api/users/login` | No | Login |
+| `POST` | `/api/users` | No | Register |
+| `GET` | `/api/user` | Yes | Get current user |
+| `PUT` | `/api/user` | Yes | Update current user |
+| `GET` | `/api/profiles/:username` | Optional | Get profile |
+| `POST` | `/api/profiles/:username/follow` | Yes | Follow user |
+| `DELETE` | `/api/profiles/:username/follow` | Yes | Unfollow user |
+| `GET` | `/api/articles` | Optional | List articles (filterable) |
+| `GET` | `/api/articles/feed` | Yes | Get personalised feed |
+| `GET` | `/api/articles/:slug` | Optional | Get article |
+| `POST` | `/api/articles` | Yes | Create article |
+| `PUT` | `/api/articles/:slug` | Yes | Update article |
+| `DELETE` | `/api/articles/:slug` | Yes | Delete article |
+| `POST` | `/api/articles/:slug/favorite` | Yes | Favourite article |
+| `DELETE` | `/api/articles/:slug/favorite` | Yes | Unfavourite article |
+| `GET` | `/api/articles/:slug/comments` | Optional | Get comments |
+| `POST` | `/api/articles/:slug/comments` | Yes | Add comment |
+| `DELETE` | `/api/articles/:slug/comments/:id` | Yes | Delete comment |
+| `GET` | `/api/tags` | No | Get tags |
 
-## Agentic Development
+---
 
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
+## Project Structure
 
-```bash
-composer require laravel/boost --dev
-
-php artisan boost:install
+```
+├── app/
+│   ├── Http/
+│   │   ├── Controllers/       # API controllers (Articles, Auth, Comments, Profiles, Tags, Users)
+│   │   ├── Middleware/        # Auth middleware (token extraction & validation)
+│   │   └── Requests/          # Form request validation classes
+│   ├── Models/                # Eloquent models (User, Article, Comment, Tag)
+│   └── Providers/             # Service providers
+├── config/                    # Laravel config files (including CORS, auth, sanctum)
+├── database/
+│   ├── migrations/            # Database schema migrations
+│   └── seeders/               # Optional seeders for test data
+├── routes/
+│   └── api.php                # All API route definitions
+├── tests/
+│   ├── Feature/               # Feature (integration) tests per endpoint group
+│   └── Unit/                  # Unit tests
+├── .env.example               # Example environment configuration
+├── artisan                    # Laravel CLI entry point
+├── composer.json              # PHP dependencies
+└── phpunit.xml                # PHPUnit configuration
 ```
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+---
 
-## Contributing
+## Prerequisites
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+- **PHP** 8.4 or later
+- **Composer** 2.x
+- **Postgres** 17.x
+- A web server or Laravel's built-in dev server
 
-## Code of Conduct
+---
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+## Getting Started
 
-## Security Vulnerabilities
+### 1. Clone the repository
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+```bash
+git clone https://github.com/TomislavVinkovic/realworld-api-laravel-12.git
+cd realworld-api-laravel-13
+```
+
+### 2. Install PHP dependencies
+
+```bash
+composer install
+```
+
+### 3. Set up your environment file
+
+```bash
+cp .env.example .env
+php artisan key:generate
+```
+
+Open `.env` and update the database connection details:
+
+```dotenv
+DB_CONNECTION=pgsql
+DB_HOST=127.0.0.1
+DB_PORT=5432
+DB_DATABASE=realworld
+DB_USERNAME=your_db_user
+DB_PASSWORD=your_db_password
+```
+
+### 4. Run migrations
+
+```bash
+php artisan migrate
+```
+
+Optionally seed the database with sample data:
+
+```bash
+php artisan db:seed
+```
+
+### 5. Start the development server
+
+```bash
+php artisan serve
+```
+
+The API will be available at **[http://localhost:8888/api](http://localhost:8888/api)**.
+
+---
+
+## Authentication
+
+Authentication is handled via **Bearer tokens** (Laravel Sanctum). To access protected endpoints, include the token returned on login or registration in the `Authorization` header:
+
+```
+Authorization: Token <your_token_here>
+```
+
+---
+
+## Further Reading
+
+- [RealWorld API Spec](https://realworld-docs.netlify.app/docs/specs/backend-specs/introduction)
+- [Laravel 13 Documentation](https://laravel.com/docs/13.x)
+- [Laravel Sanctum](https://laravel.com/docs/12.x/sanctum)
+
+---
 
 ## License
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+MIT
