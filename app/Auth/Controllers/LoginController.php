@@ -3,7 +3,7 @@
 namespace App\Auth\Controllers;
 
 use App\Auth\Actions\LoginAction;
-use App\Auth\Requests\LoginRequest;
+use App\Auth\Requests\CreateArticleRequest;
 use App\Auth\Resources\ProfileResource;
 use App\Auth\Resources\UserResource;
 use App\Core\Exceptions\InvalidCredentialsException;
@@ -19,7 +19,7 @@ readonly class LoginController
     /**
      * @throws InvalidCredentialsException
      */
-    public function login(LoginRequest $request): UserResource
+    public function login(CreateArticleRequest $request): UserResource
     {
         return $this->loginAction->execute($request);
     }

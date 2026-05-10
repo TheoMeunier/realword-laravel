@@ -1,0 +1,10 @@
+<?php
+
+namespace App\Articles\Models;
+
+use Illuminate\Database\Eloquent\Model;
+
+class Tag extends Model
+{
+    //
+}

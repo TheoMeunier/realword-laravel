@@ -9,14 +9,12 @@ use Illuminate\Http\Resources\Json\JsonResource;
 
 class ExceptionResource extends JsonResource
 {
-    public static $wrap = 'error';
+    public static $wrap = 'errors';
 
     public function toArray(Request $request): array
     {
         return [
-            'code'    => $this['code'],
-            'message' => $this['message'],
-            'type'    => $this['type'],
+            'resource'    => ["not found"],
         ];
     }
 }
