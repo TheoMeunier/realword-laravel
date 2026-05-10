@@ -5,6 +5,7 @@ namespace App\Auth\Actions;
 use App\Auth\Models\User;
 use App\Auth\Requests\LoginRequest;
 use App\Auth\Resources\ProfileResource;
+use App\Auth\Resources\UserResource;
 use App\Auth\Services\AuthJwtService;
 use App\Core\Exceptions\InvalidCredentialsException;
 use Illuminate\Support\Facades\Hash;
@@ -18,7 +19,7 @@ readonly class LoginAction
     /**
      * @throws InvalidCredentialsException
      */
-    public function execute(LoginRequest $request): ProfileResource
+    public function execute(LoginRequest $request): UserResource
     {
         $user = User::query()->where('email', $request->get('email'))->first();
 
@@ -32,6 +33,6 @@ readonly class LoginAction
 
         $token = $this->service->generateToken($user);
 
-        return new ProfileResource($user, $token);
+        return new UserResource($user, $token);
     }
 }

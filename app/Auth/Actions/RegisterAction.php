@@ -5,6 +5,7 @@ namespace App\Auth\Actions;
 use App\Auth\Models\User;
 use App\Auth\Requests\RegisterRequest;
 use App\Auth\Resources\ProfileResource;
+use App\Auth\Resources\UserResource;
 use App\Auth\Services\AuthJwtService;
 use Illuminate\Support\Facades\Hash;
 
@@ -14,7 +15,7 @@ readonly class RegisterAction
         private AuthJwtService $service,
     ) {}
 
-    public function execute(RegisterRequest $request): ProfileResource
+    public function execute(RegisterRequest $request): UserResource
     {
         $user = User::query()->create([
             'username' => $request->name,
@@ -24,6 +25,6 @@ readonly class RegisterAction
 
         $token = $this->service->generateToken($user);
 
-        return new ProfileResource($user, $token);
+        return new UserResource($user, $token);
     }
 }

@@ -5,6 +5,7 @@ namespace App\Auth\Controllers;
 use App\Auth\Actions\LoginAction;
 use App\Auth\Requests\LoginRequest;
 use App\Auth\Resources\ProfileResource;
+use App\Auth\Resources\UserResource;
 use App\Core\Exceptions\InvalidCredentialsException;
 
 readonly class LoginController
@@ -18,7 +19,7 @@ readonly class LoginController
     /**
      * @throws InvalidCredentialsException
      */
-    public function login(LoginRequest $request): ProfileResource
+    public function login(LoginRequest $request): UserResource
     {
         return $this->loginAction->execute($request);
     }
