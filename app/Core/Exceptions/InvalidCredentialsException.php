@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Core\Exceptions;
 
 use App\Core\Exceptions\Resources\ExceptionResource;
@@ -14,10 +16,8 @@ class InvalidCredentialsException extends Exception
 
     public function render(): JsonResponse
     {
-        return ExceptionResource::make([
-            'code' => $this->getCode(),
-            'message' => $this->getMessage(),
-            'type' => class_basename($this),
-        ])->response()->setStatusCode($this->getCode());
+        return ExceptionResource::make(['body' => [$this->getMessage()]])
+            ->response()
+            ->setStatusCode($this->getCode());
     }
 }

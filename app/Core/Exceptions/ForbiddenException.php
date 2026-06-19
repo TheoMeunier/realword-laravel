@@ -8,11 +8,11 @@ use App\Core\Exceptions\Resources\ExceptionResource;
 use Exception;
 use Illuminate\Http\JsonResponse;
 
-class NotFoundException extends Exception
+class ForbiddenException extends Exception
 {
-    protected $message = 'Resource not found.';
+    protected $message = 'You are not authorized to perform this action.';
 
-    protected $code = 404;
+    protected $code = 403;
 
     public function render(): JsonResponse
     {
