@@ -1,0 +1,47 @@
+{
+	frankenphp {
+		worker {
+			file /var/www/public/frankenphp-worker.php
+			num auto
+		}
+
+		php_ini post_max_size 50M
+		php_ini upload_max_filesize 50M
+	}
+
+	# Disable admin API in production
+	admin off
+
+	log {
+		format json
+		level WARN
+	}
+}
+
+:8080 {
+	root * /var/www/public
+
+	# Brotli + zstd + gzip
+	encode zstd br gzip
+
+	# Remove fingerprinting headers
+	header {
+		-Server
+		-X-Powered-By
+		X-Frame-Options SAMEORIGIN
+		X-Content-Type-Options nosniff
+		X-XSS-Protection "1; mode=block"
+		Referrer-Policy strict-origin-when-cross-origin
+		Permissions-Policy "camera=(), microphone=(), geolocation=()"
+	}
+
+	# Long-term cache for versioned static assets
+	@static {
+		file
+		path *.js *.css *.png *.jpg *.jpeg *.gif *.ico *.svg *.woff *.woff2 *.ttf *.eot *.webp *.avif
+	}
+	header @static Cache-Control "public, max-age=31536000, immutable"
+
+	php_server
+	file_server
+}
