@@ -6,16 +6,12 @@ namespace App\Articles\Controllers\Articles;
 
 use App\Articles\Models\Article;
 use App\Articles\Resources\ArticleResource;
-use App\Core\Exceptions\NotFoundException;
 
 class GetArticleController
 {
-    /**
-     * @throws NotFoundException
-     */
-    public function show(string $slug): ArticleResource
+    public function show(Article $article): ArticleResource
     {
-        $article = Article::query()->with(['author', 'tags'])->where('slug', $slug)->firstOrFail();
+        $article->load(['author', 'tags', 'favorites']);
 
         return new ArticleResource($article);
     }

@@ -2,18 +2,16 @@
 
 namespace App\Auth\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
-use App\Articles\Models\Article;
 use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\Hidden;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
-#[Fillable(['username', 'email', 'password', 'bio', 'image', 'following'])]
+#[Fillable(['username', 'email', 'password', 'bio', 'image'])]
 #[Hidden(['password', 'remember_token'])]
 class User extends Authenticatable
 {
@@ -25,22 +23,26 @@ class User extends Authenticatable
         return UserFactory::new();
     }
 
-    /**
-     * Get the attributes that should be cast.
-     *
-     * @return array<string, string>
-     */
     protected function casts(): array
     {
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
-            'following' => 'boolean',
         ];
     }
 
-    public function following(): HasMany
+    public function following(): BelongsToMany
     {
-        return $this->hasMany(Article::class, 'user_id');
+        return $this->belongsToMany(User::class, 'user_followers', 'follower_id', 'followed_id');
+    }
+
+    public function followers(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class, 'user_followers', 'followed_id', 'follower_id');
+    }
+
+    public function isFollowing(User $user): bool
+    {
+        return $this->following()->where('followed_id', $user->id)->exists();
     }
 }

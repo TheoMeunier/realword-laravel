@@ -13,9 +13,11 @@ class ListArticlesFeedController
 {
     public function list(Request $request): JsonResponse
     {
-        $followedIds = auth()->user()->following()->pluck('user.id');
+        $followedIds = auth()->user()->following()->pluck('users.id');
 
-        $query = Article::with(['author', 'tags', 'favoritedBy'])
+        $total = Article::query()->whereIn('user_id', $followedIds)->count();
+
+        $articles = Article::with(['author', 'tags', 'favorites'])
             ->whereIn('user_id', $followedIds)
             ->latest()
             ->skip((int) $request->input('offset', 0))
@@ -23,8 +25,8 @@ class ListArticlesFeedController
             ->get();
 
         return response()->json([
-            'articles' => ArticleResource::collection($query),
-            'articlesCount' => $query->count(),
+            'articles' => ArticleResource::collection($articles),
+            'articlesCount' => $total,
         ]);
     }
 }

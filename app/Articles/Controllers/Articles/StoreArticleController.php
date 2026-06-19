@@ -14,7 +14,7 @@ readonly class StoreArticleController
         private StoreArticleAction $storeArticleAction
     ) {}
 
-    public function update(StoreArticleRequest $request): JsonResponse
+    public function store(StoreArticleRequest $request): JsonResponse
     {
         return $this->storeArticleAction->execute($request)->response();
     }

@@ -6,7 +6,7 @@ use App\Articles\Controllers\Articles\DeleteArticleController;
 use App\Articles\Controllers\Articles\GetArticleController;
 use App\Articles\Controllers\Articles\ListArticlesController;
 use App\Articles\Controllers\Articles\ListArticlesFeedController;
-use App\Articles\Controllers\Articles\UpdateArticleController;
+use App\Articles\Controllers\Articles\StoreArticleController;
 use App\Articles\Controllers\Comments\DeleteCommentController;
 use App\Articles\Controllers\Comments\ListCommentController;
 use App\Articles\Controllers\Comments\StoreCommentController;
@@ -26,6 +26,8 @@ Route::prefix('user')->name('user.')->group(function (): void {
     Route::post('/', [RegisterController::class, 'register'])->name('register');
 });
 
+Route::get('/', [ListArticlesController::class, 'list'])->name('list');
+
 // route auth
 Route::middleware('auth:sanctum')->group(function (): void {
     Route::prefix('user')->name('user.')->group(function (): void {
@@ -40,10 +42,10 @@ Route::middleware('auth:sanctum')->group(function (): void {
     });
 
     Route::prefix('articles')->name('articles.')->group(function (): void {
-        Route::get('/', [ListArticlesController::class, 'list'])->name('list');
         Route::get('/feed', [ListArticlesFeedController::class, 'list'])->name('list');
         Route::get('/{article:slug}', [GetArticleController::class, 'show'])->name('show');
-        Route::put('/{article:slug}', [UpdateArticleController::class, 'update'])->name('update');
+        Route::get('/{article:slug}', [GetArticleController::class, 'show'])->name('show');
+        Route::post('/', [StoreArticleController::class, 'store'])->name('store');
         Route::delete('/{article:slug}', [DeleteArticleController::class, 'remove'])->name('delete');
 
         // comments

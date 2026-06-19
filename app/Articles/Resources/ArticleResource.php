@@ -6,9 +6,9 @@ namespace App\Articles\Resources;
 
 use App\Profile\Resources\ProfileResource;
 use Illuminate\Http\Request;
-use Illuminate\Http\Resources\Json\ResourceCollection;
+use Illuminate\Http\Resources\Json\JsonResource;
 
-final class ArticleResource extends ResourceCollection
+class ArticleResource extends JsonResource
 {
     public static $wrap = 'article';
 

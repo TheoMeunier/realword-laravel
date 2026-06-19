@@ -10,14 +10,14 @@ use App\Articles\Resources\CommentResource;
 
 final class StoreCommentAction
 {
-    public function execute(string $string, StoreCommentRequest $request): CommentResource
+    public function execute(Article $article, StoreCommentRequest $request): CommentResource
     {
-        $article = Article::query()->where('slug', $string)->firstOrFail();
-
         $comment = $article->comments()->create([
-            'body' => $request->body,
+            'body' => $request->input('body'),
             'user_id' => auth()->id(),
         ]);
+
+        $comment->load('author');
 
         return new CommentResource($comment);
     }

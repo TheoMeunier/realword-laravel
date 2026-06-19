@@ -5,21 +5,17 @@ declare(strict_types=1);
 namespace App\Profile\Actions;
 
 use App\Auth\Models\User;
-use App\Auth\Resources\ProfileResource;
-use App\Core\Exceptions\NotFoundException;
+use App\Profile\Resources\ProfileResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 final class FollowProfileAction
 {
     public function execute(string $username): JsonResource
     {
-        $user = User::query()->where('username', $username)->firstOrFail();
+        $target = User::query()->where('username', $username)->firstOrFail();
 
-        throw_unless($user, NotFoundException::class, 'User not found');
+        auth()->user()->following()->syncWithoutDetaching($target->id);
 
-        $user->following = true;
-        $user->save();
-
-        return ProfileResource::make($user);
+        return ProfileResource::make($target);
     }
 }

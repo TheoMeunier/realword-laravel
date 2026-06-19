@@ -17,7 +17,7 @@ readonly class RegisterAction
     public function execute(RegisterRequest $request): UserResource
     {
         $user = User::query()->create([
-            'username' => $request->name,
+            'username' => $request->username,
             'email' => $request->email,
             'password' => Hash::make($request->password),
         ]);

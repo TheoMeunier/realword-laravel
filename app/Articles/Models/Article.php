@@ -31,9 +31,9 @@ final class Article extends Model
         return $this->belongsTo(User::class, 'user_id');
     }
 
-    public function tags(): BelongsToMany
+    public function tags(): HasMany
     {
-        return $this->belongsToMany(Tag::class);
+        return $this->hasMany(Tag::class);
     }
 
     public function comments(): HasMany
@@ -49,12 +49,12 @@ final class Article extends Model
     // getters
     public function favoritesCount(): int
     {
-        return $this->favorites()->count();
+        return $this->favorites->count();
     }
 
     public function favoritedBy(): Collection
     {
-        return $this->favorites()->pluck('users.id');
+        return $this->favorites->pluck('id');
     }
 
     // scope

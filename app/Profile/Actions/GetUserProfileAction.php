@@ -5,19 +5,13 @@ declare(strict_types=1);
 namespace App\Profile\Actions;
 
 use App\Auth\Models\User;
-use App\Auth\Resources\ProfileResource;
-use App\Core\Exceptions\NotFoundException;
+use App\Profile\Resources\ProfileResource;
 
 final class GetUserProfileAction
 {
-    /**
-     * @throws NotFoundException
-     */
-    public function execute(string $username)
+    public function execute(string $username): ProfileResource
     {
         $user = User::query()->where('username', $username)->firstOrFail();
-
-        throw_unless($user, NotFoundException::class, 'User not found');
 
         return ProfileResource::make($user);
     }

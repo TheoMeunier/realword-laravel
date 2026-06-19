@@ -5,8 +5,9 @@ declare(strict_types=1);
 namespace App\Articles\Controllers\Articles;
 
 use App\Articles\Actions\Articles\UpdateArticleAction;
+use App\Articles\Models\Article;
 use App\Articles\Requests\UpdateArticleRequest;
-use Illuminate\Http\JsonResponse;
+use App\Articles\Resources\ArticleResource;
 
 readonly class UpdateArticleController
 {
@@ -14,8 +15,8 @@ readonly class UpdateArticleController
         private UpdateArticleAction $updateArticleAction
     ) {}
 
-    public function update(string $slug, UpdateArticleRequest $request): JsonResponse
+    public function update(Article $article, UpdateArticleRequest $request): ArticleResource
     {
-        return $this->updateArticleAction->execute($slug, $request)->response();
+        return $this->updateArticleAction->execute($article, $request);
     }
 }

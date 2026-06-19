@@ -8,19 +8,25 @@ use App\Articles\Models\Article;
 use App\Articles\Models\Tag;
 use App\Articles\Requests\UpdateArticleRequest;
 use App\Articles\Resources\ArticleResource;
+use Illuminate\Support\Facades\Gate;
 
 final class UpdateArticleAction
 {
-    public function execute(string $slug, UpdateArticleRequest $request): ArticleResource
+    public function execute(Article $article, UpdateArticleRequest $request): ArticleResource
     {
-        $article = Article::query()->with(['author', 'tags', 'favorites'])->where('slug', $slug)->firstOrFail();
+        Gate::authorize('update', $article);
 
-        $article->title = $request->title;
-        $article->description = $request->description;
-        $article->body = $request->body;
+        if ($request->filled('title')) {
+            $article->title = $request->input('title');
+            $article->slug = str()->slug($request->input('title'));
+        }
 
-        if ($request->has('title')) {
-            $article->slug = str()->slug($request->title);
+        if ($request->filled('description')) {
+            $article->description = $request->input('description');
+        }
+
+        if ($request->filled('body')) {
+            $article->body = $request->input('body');
         }
 
         $article->save();
@@ -35,6 +41,8 @@ final class UpdateArticleAction
 
             Tag::query()->insert($tagRows);
         }
+
+        $article->load(['author', 'tags', 'favorites']);
 
         return new ArticleResource($article);
     }

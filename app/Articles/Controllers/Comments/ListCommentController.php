@@ -9,9 +9,9 @@ use App\Articles\Resources\CommentResource;
 
 class ListCommentController
 {
-    public function list(string $slug): CommentResource
+    public function list(Article $article): CommentResource
     {
-        $article = Article::query()->with('comments')->where('slug', $slug)->firstOrFail();
+        $article->load('comments.author');
 
         return new CommentResource($article->comments);
     }

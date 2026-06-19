@@ -24,23 +24,19 @@ return Application::configure(basePath: dirname(__DIR__))
         //
     })
     ->withExceptions(function (Exceptions $exceptions): void {
-        $exceptions->render(function (ModelNotFoundException $e) {
+        $exceptions->render(function (ModelNotFoundException $e): void {
             throw new NotFoundException;
         });
 
-        $exceptions->render(function (AuthenticationException $e) {
-            return ExceptionResource::make(['body' => ['Unauthenticated.']])
-                ->response()
-                ->setStatusCode(401);
-        });
+        $exceptions->render(fn(AuthenticationException $e) => ExceptionResource::make(['body' => ['Unauthenticated.']])
+            ->response()
+            ->setStatusCode(401));
 
-        $exceptions->render(function (AuthorizationException $e) {
+        $exceptions->render(function (AuthorizationException $e): void {
             throw new ForbiddenException($e->getMessage());
         });
 
-        $exceptions->render(function (ValidationException $e) {
-            return ExceptionResource::make($e->errors())
-                ->response()
-                ->setStatusCode(422);
-        });
+        $exceptions->render(fn(ValidationException $e) => ExceptionResource::make($e->errors())
+            ->response()
+            ->setStatusCode(422));
     })->create();
