@@ -2,7 +2,6 @@
 
 use App\Articles\Models\Article;
 use App\Articles\Models\Tag;
-use App\Auth\Models\User;
 
 describe('Get article', function () {
     it('returns an article by slug', function () {
