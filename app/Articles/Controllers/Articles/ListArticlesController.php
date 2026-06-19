@@ -13,17 +13,23 @@ class ListArticlesController
 {
     public function list(Request $request): JsonResponse
     {
-        $query = Article::with(['author', 'tags', 'favorites'])
+        $query = Article::query()
             ->latest()
-            ->skip((int) $request->input('offset', 0))
-            ->take((int) $request->input('limit', 20))
             ->tag($request->tag)
             ->byAuthor($request->author)
             ->favoritedBy($request->favorited);
 
+        $total = $query->count();
+
+        $articles = $query
+            ->with(['author', 'tags', 'favorites'])
+            ->skip((int) $request->input('offset', 0))
+            ->take((int) $request->input('limit', 20))
+            ->get();
+
         return response()->json([
-            'articles' => ArticleResource::collection($query->get()),
-            'articlesCount' => Article::query()->count(),
+            'articles' => ArticleResource::collection($articles),
+            'articlesCount' => $total,
         ]);
     }
 }

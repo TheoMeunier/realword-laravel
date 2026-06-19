@@ -27,7 +27,7 @@ Route::prefix('user')->name('user.')->group(function (): void {
     Route::post('/', [RegisterController::class, 'register'])->name('register');
 });
 
-Route::get('/', [ListArticlesController::class, 'list'])->name('list');
+Route::get('/articles', [ListArticlesController::class, 'list'])->name('list');
 
 // route auth
 Route::middleware('auth:sanctum')->group(function (): void {

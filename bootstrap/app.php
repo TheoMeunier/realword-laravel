@@ -28,7 +28,7 @@ return Application::configure(basePath: dirname(__DIR__))
             throw new NotFoundException;
         });
 
-        $exceptions->render(fn(AuthenticationException $e) => ExceptionResource::make(['body' => ['Unauthenticated.']])
+        $exceptions->render(fn (AuthenticationException $e) => ExceptionResource::make(['body' => ['Unauthenticated.']])
             ->response()
             ->setStatusCode(401));
 
@@ -36,7 +36,7 @@ return Application::configure(basePath: dirname(__DIR__))
             throw new ForbiddenException($e->getMessage());
         });
 
-        $exceptions->render(fn(ValidationException $e) => ExceptionResource::make($e->errors())
+        $exceptions->render(fn (ValidationException $e) => ExceptionResource::make($e->errors())
             ->response()
             ->setStatusCode(422));
     })->create();
