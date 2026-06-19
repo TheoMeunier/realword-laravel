@@ -31,7 +31,6 @@ class UserFactory extends Factory
             'remember_token' => Str::random(10),
             'bio' => fake()->optional()->sentence(),
             'image' => fake()->optional()->imageUrl(100, 100, 'people'),
-            'following' => false,
         ];
     }
 
