@@ -25,9 +25,9 @@ final class ArticleResource extends ResourceCollection
             'slug' => $this->slug,
             'description' => $this->description,
             'tagList' => $this->tags->pluck('title')->toArray(),
-            'createdAt' => $this->createdAt,
-            'updatedAt' => $this->updatedAt,
-            'favorited' => $this->favorited(),
+            'createdAt' => $this->createdAt->toIso8601String(),
+            'updatedAt' => $this->updatedAt->toIso8601String(),
+            'favorited' => $this->favoritedBy()->contains(auth()->id()),
             'favoritesCount' => $this->favoritesCount(),
             'author' => ProfileResource::make($this->author),
         ];

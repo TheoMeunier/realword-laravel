@@ -6,34 +6,29 @@ namespace App\Articles\Actions\Articles;
 
 use App\Articles\Models\Article;
 use App\Articles\Models\Tag;
+use App\Articles\Requests\StoreArticleRequest;
 use App\Articles\Requests\UpdateArticleRequest;
 use App\Articles\Resources\ArticleResource;
 
-final class UpdateArticleAction
+final class StoreArticleAction
 {
-    public function execute(string $slug, UpdateArticleRequest $request): ArticleResource
+    public function execute(StoreArticleRequest $request): ArticleResource
     {
-        $article = Article::query()->with(['author', 'tags', 'favorites'])->where('slug', $slug)->firstOrFail();
-
+        $article = new Article();
         $article->title = $request->title;
+        $article->slug = str()->slug($request->title);
         $article->description = $request->description;
         $article->body = $request->body;
-
-        if ($request->has('title')) {
-            $article->slug = str()->slug($request->title);
-        }
 
         $article->save();
 
         if ($request->has('article.tagList')) {
-            $article->tags()->delete();
-
             $tagRows = collect($request->article['tagList'])->map(fn($tag) => [
                 'title' => $tag,
                 'article_id' => $article->id,
             ])->toArray();
 
-            Tag::query()->insert($tagRows);
+           Tag::query()->insert($tagRows);
         }
 
         return new ArticleResource($article);

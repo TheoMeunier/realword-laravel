@@ -33,7 +33,7 @@ class StoreArticleRequest extends FormRequest
             'article.title'       => 'required|string|min:3|max:255',
             'article.description' => 'required|string|min:3|max:255',
             'article.body'        => 'required|string|min:3',
-            'article.tagList'     => 'array',
+            'article.tagList'     => 'array|nullable',
             'article.tagList.*'   => 'string',
         ];
     }

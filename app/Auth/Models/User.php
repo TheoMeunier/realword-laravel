@@ -3,10 +3,12 @@
 namespace App\Auth\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Articles\Models\Article;
 use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\Hidden;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -35,5 +37,10 @@ class User extends Authenticatable
             'password' => 'hashed',
             'following' => 'boolean',
         ];
+    }
+
+    public function following(): HasMany
+    {
+        return $this->hasMany(Article::class, 'user_id');
     }
 }

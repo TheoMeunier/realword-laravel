@@ -51,8 +51,24 @@ final class Article extends Model
         return $this->favorite()->count();
     }
 
-    public function favorited(): bool
+    public function favoritedBy(): bool
     {
         return $this->favorite()->where('user_id', auth()->id())->exists();
+    }
+
+    // scope
+    public function scopeTag($query, $tag)
+    {
+        return $query->when($tag, fn($q) => $q->whereHas('tags', fn($q) => $q->where('name', $tag)));
+    }
+
+    public function scopeByAuthor($query, $username)
+    {
+        return $query->when($username, fn($q) => $q->whereHas('author', fn($q) => $q->where('username', $username)));
+    }
+
+    public function scopeFavoritedBy($query, $username)
+    {
+        return $query->when($username, fn($q) => $q->whereHas('favoritedBy', fn($q) => $q->where('username', $username)));
     }
 }
