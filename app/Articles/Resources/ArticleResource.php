@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Articles\Resources;
 
-use App\Auth\Resources\ProfileResource;
+use App\Profile\Resources\ProfileResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 

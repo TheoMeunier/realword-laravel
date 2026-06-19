@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Collection;
 
 #[Fillable(['title', 'slug', 'description', 'body', 'user_id'])]
 final class Article extends Model
@@ -40,26 +41,26 @@ final class Article extends Model
         return $this->hasMany(Comment::class);
     }
 
-    public function favorite(): BelongsTo
+    public function favorites(): BelongsToMany
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsToMany(User::class, 'article_favorites');
     }
 
     // getters
     public function favoritesCount(): int
     {
-        return $this->favorite()->count();
+        return $this->favorites()->count();
     }
 
-    public function favoritedBy(): bool
+    public function favoritedBy(): Collection
     {
-        return $this->favorite()->where('user_id', auth()->id())->exists();
+        return $this->favorites()->pluck('users.id');
     }
 
     // scope
     protected function scopeTag($query, $tag)
     {
-        return $query->when($tag, fn ($q) => $q->whereHas('tags', fn ($q) => $q->where('name', $tag)));
+        return $query->when($tag, fn ($q) => $q->whereHas('tags', fn ($q) => $q->where('title', $tag)));
     }
 
     protected function scopeByAuthor($query, $username)
@@ -69,6 +70,6 @@ final class Article extends Model
 
     protected function scopeFavoritedBy($query, $username)
     {
-        return $query->when($username, fn ($q) => $q->whereHas('favoritedBy', fn ($q) => $q->where('username', $username)));
+        return $query->when($username, fn ($q) => $q->whereHas('favorites', fn ($q) => $q->where('username', $username)));
     }
 }
