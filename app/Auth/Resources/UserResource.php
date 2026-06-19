@@ -9,7 +9,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
 
 class UserResource extends JsonResource
 {
-    public function __construct(mixed $resource, protected string $token)
+    public function __construct(mixed $resource, protected ?string $token)
     {
         parent::__construct($resource);
     }
