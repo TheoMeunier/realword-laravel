@@ -18,6 +18,11 @@ class User extends Authenticatable
     /** @use HasFactory<UserFactory> */
     use HasFactory, Notifiable, HasApiTokens;
 
+    protected static function newFactory(): UserFactory
+    {
+        return UserFactory::new();
+    }
+
     /**
      * Get the attributes that should be cast.
      *
