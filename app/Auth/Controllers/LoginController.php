@@ -1,9 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Auth\Controllers;
 
 use App\Auth\Actions\LoginAction;
-use App\Auth\Requests\CreateArticleRequest;
+use App\Auth\Requests\LoginRequest;
 use App\Auth\Resources\UserResource;
 use App\Core\Exceptions\InvalidCredentialsException;
 
@@ -16,7 +18,7 @@ readonly class LoginController
     /**
      * @throws InvalidCredentialsException
      */
-    public function login(CreateArticleRequest $request): UserResource
+    public function login(LoginRequest $request): UserResource
     {
         return $this->loginAction->execute($request);
     }
