@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Auth;
 
 class UpdateUserAction
 {
-    public function execute(UpdateUserRequest $request): ProfileResouUserResourcerce
+    public function execute(UpdateUserRequest $request): UserResource
     {
         $user = Auth::user();
         $user->update($request->validated());

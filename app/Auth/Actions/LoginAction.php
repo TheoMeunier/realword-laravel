@@ -3,8 +3,7 @@
 namespace App\Auth\Actions;
 
 use App\Auth\Models\User;
-use App\Auth\Requests\CreateArticleRequest;
-use App\Auth\Resources\ProfileResource;
+use App\Auth\Requests\LoginRequest;
 use App\Auth\Resources\UserResource;
 use App\Auth\Services\AuthJwtService;
 use App\Core\Exceptions\InvalidCredentialsException;
@@ -19,7 +18,7 @@ readonly class LoginAction
     /**
      * @throws InvalidCredentialsException
      */
-    public function execute(CreateArticleRequest $request): UserResource
+    public function execute(LoginRequest $request): UserResource
     {
         $user = User::query()->where('email', $request->get('email'))->first();
 
