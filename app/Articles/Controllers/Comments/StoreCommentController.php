@@ -12,12 +12,10 @@ readonly class StoreCommentController
 {
     public function __construct(
         private StoreCommentAction $storeCommentAction
-    )
-    {
-    }
+    ) {}
 
     public function store(string $slug, StoreCommentRequest $request): CommentResource
     {
-        return $this->storeCommentAction->execute($slug,  $request);
+        return $this->storeCommentAction->execute($slug, $request);
     }
 }

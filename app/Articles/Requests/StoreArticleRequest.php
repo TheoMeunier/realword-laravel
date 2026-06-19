@@ -30,11 +30,11 @@ class StoreArticleRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'article.title'       => 'required|string|min:3|max:255',
-            'article.description' => 'required|string|min:3|max:255',
-            'article.body'        => 'required|string|min:3',
-            'article.tagList'     => 'array|nullable',
-            'article.tagList.*'   => 'string',
+            'article.title' => ['required', 'string', 'min:3', 'max:255'],
+            'article.description' => ['required', 'string', 'min:3', 'max:255'],
+            'article.body' => ['required', 'string', 'min:3'],
+            'article.tagList' => ['array', 'nullable'],
+            'article.tagList.*' => ['string'],
         ];
     }
 }

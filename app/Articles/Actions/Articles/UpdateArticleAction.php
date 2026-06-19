@@ -28,10 +28,10 @@ final class UpdateArticleAction
         if ($request->has('article.tagList')) {
             $article->tags()->delete();
 
-            $tagRows = collect($request->article['tagList'])->map(fn($tag) => [
+            $tagRows = collect($request->article['tagList'])->map(fn ($tag): array => [
                 'title' => $tag,
                 'article_id' => $article->id,
-            ])->toArray();
+            ])->all();
 
             Tag::query()->insert($tagRows);
         }

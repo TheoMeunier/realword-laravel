@@ -15,7 +15,7 @@ final class FollowProfileAction
     {
         $user = User::query()->where('username', $username)->firstOrFail();
 
-        if (!$user) { throw new NotFoundException("User not found"); }
+        throw_unless($user, NotFoundException::class, 'User not found');
 
         $user->following = true;
         $user->save();

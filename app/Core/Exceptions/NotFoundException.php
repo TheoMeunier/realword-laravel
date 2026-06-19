@@ -15,4 +15,3 @@ class NotFoundException extends Exception
         return ExceptionResource::make()->response()->setStatusCode($this->getCode());
     }
 }
-

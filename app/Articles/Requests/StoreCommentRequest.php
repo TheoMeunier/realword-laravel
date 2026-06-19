@@ -30,7 +30,7 @@ class StoreCommentRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'comment.body'        => 'required|string|min:3',
+            'comment.body' => ['required', 'string', 'min:3'],
         ];
     }
 }

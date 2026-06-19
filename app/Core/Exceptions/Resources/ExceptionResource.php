@@ -14,7 +14,7 @@ class ExceptionResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'resource'    => ["not found"],
+            'resource' => ['not found'],
         ];
     }
 }

@@ -1,13 +1,14 @@
 <?php
 
-namespace App\Auth\Resources;
+declare(strict_types=1);
+
+namespace App\Profile\Resources;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class ProfileResource extends JsonResource
 {
-
     public static $wrap = 'profile';
 
     /**

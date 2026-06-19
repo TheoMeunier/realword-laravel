@@ -22,13 +22,9 @@ readonly class LoginAction
     {
         $user = User::query()->where('email', $request->get('email'))->first();
 
-        if (!$user) {
-            throw new InvalidCredentialsException();
-        }
+        throw_unless($user, InvalidCredentialsException::class);
 
-        if (!Hash::check($request->password, $user->password)) {
-            throw new InvalidCredentialsException();
-        }
+        throw_unless(Hash::check($request->password, $user->password), InvalidCredentialsException::class);
 
         $token = $this->service->generateToken($user);
 

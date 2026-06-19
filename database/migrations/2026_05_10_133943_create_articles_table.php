@@ -15,7 +15,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('articles', function (Blueprint $table) {
+        Schema::create('articles', function (Blueprint $table): void {
             $table->id();
 
             $table->string('title');
@@ -27,12 +27,12 @@ return new class extends Migration
             $table->timestamps();
         });
 
-        Schema::create('article_favorites', function (Blueprint $table) {
+        Schema::create('article_favorites', function (Blueprint $table): void {
             $table->foreignIdFor(User::class)->constrained()->onDelete('cascade');
             $table->foreignIdFor(Article::class)->constrained('articles')->onDelete('cascade');
         });
 
-        Schema::create('article_tags', function (Blueprint $table) {
+        Schema::create('article_tags', function (Blueprint $table): void {
             $table->id();
             $table->string('title');
             $table->foreignIdFor(Article::class)->constrained('articles')->onDelete('cascade');

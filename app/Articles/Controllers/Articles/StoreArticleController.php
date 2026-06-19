@@ -12,12 +12,10 @@ readonly class StoreArticleController
 {
     public function __construct(
         private StoreArticleAction $storeArticleAction
-    )
-    {
-    }
+    ) {}
 
     public function update(StoreArticleRequest $request): JsonResponse
     {
-       return $this->storeArticleAction->execute($request)->response();
+        return $this->storeArticleAction->execute($request)->response();
     }
 }

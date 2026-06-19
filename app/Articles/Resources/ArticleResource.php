@@ -6,7 +6,6 @@ namespace App\Articles\Resources;
 
 use App\Auth\Resources\ProfileResource;
 use Illuminate\Http\Request;
-use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
 final class ArticleResource extends ResourceCollection

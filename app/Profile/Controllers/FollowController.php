@@ -12,9 +12,7 @@ readonly class FollowController
 {
     public function __construct(
         private FollowProfileAction $followProfileAction
-    )
-    {
-    }
+    ) {}
 
     /**
      * @throws NotFoundException
@@ -24,4 +22,3 @@ readonly class FollowController
         return $this->followProfileAction->execute($username);
     }
 }
-

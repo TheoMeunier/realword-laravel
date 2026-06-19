@@ -12,15 +12,13 @@ readonly class ShowUserController
 {
     public function __construct(
         private GetUserProfileAction $getUserProfileAction
-    )
-    {
-    }
+    ) {}
 
     /**
      * @throws NotFoundException
      */
     public function show(string $username): JsonResource
     {
-        return  $this->getUserProfileAction->execute($username);
+        return $this->getUserProfileAction->execute($username);
     }
 }

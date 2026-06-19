@@ -6,7 +6,7 @@ namespace App\Articles\Controllers\Favorite;
 
 class UnfavoriteArticleController
 {
-    public function unfavorite()
+    public function unfavorite(): void
     {
         // return articles
     }

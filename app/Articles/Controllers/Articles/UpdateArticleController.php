@@ -12,12 +12,10 @@ readonly class UpdateArticleController
 {
     public function __construct(
         private UpdateArticleAction $updateArticleAction
-    )
-    {
-    }
+    ) {}
 
     public function update(string $slug, UpdateArticleRequest $request): JsonResponse
     {
-       return $this->updateArticleAction->execute($slug, $request)->response();
+        return $this->updateArticleAction->execute($slug, $request)->response();
     }
 }

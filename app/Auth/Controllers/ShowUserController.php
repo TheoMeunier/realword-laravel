@@ -19,7 +19,7 @@ final class ShowUserController
     {
         $user = User::query()->where('id', auth()->id())->firstOrFail();
 
-        if (!$user) { throw new NotFoundException("User not found"); }
+        throw_unless($user, NotFoundException::class, 'User not found');
 
         return new ProfileResource($user, $request->bearerToken());
     }
