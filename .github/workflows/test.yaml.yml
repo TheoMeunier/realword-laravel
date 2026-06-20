@@ -1,0 +1,63 @@
+name: tests
+
+on:
+  pull_request:
+    branches:
+      - main
+  push:
+    tags:
+      - '*'
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: laravel
+          POSTGRES_PASSWORD: secret
+          POSTGRES_DB: laravel_testing
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd="pg_isready -U laravel"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=5
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: composer install
+        uses: php-actions/composer@v6
+        with:
+          php_version: "8.4"
+          version: 1
+          command: install --prefer-dist --no-progress
+
+      - name: Copy .env
+        run: cp .env.test .env
+
+      - name: Generate app key
+        run: php artisan key:generate
+
+      - name: Run migrations
+        env:
+          DB_CONNECTION: pgsql
+          DB_HOST: 127.0.0.1
+          DB_PORT: 5432
+          DB_DATABASE: laravel_testing
+          DB_USERNAME: laravel
+          DB_PASSWORD: secret
+        run: php artisan migrate --force
+
+      - name: Run Pest tests
+        env:
+          DB_CONNECTION: pgsql
+          DB_HOST: 127.0.0.1
+          DB_PORT: 5432
+          DB_DATABASE: laravel_testing
+          DB_USERNAME: laravel
+          DB_PASSWORD: secret
+        run: ./vendor/bin/pest
