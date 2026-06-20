@@ -40,7 +40,7 @@ jobs:
           command: install --prefer-dist --no-progress
 
       - name: Copy .env
-        run: cp .env.test .env
+        run: cp .env.testing .env
 
       - name: Generate app key
         run: php artisan key:generate

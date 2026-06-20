@@ -12,6 +12,7 @@ class NotFoundException extends Exception
 {
     protected $message = 'Resource not found.';
 
+    /** @var int */
     protected $code = 404;
 
     public function render(): JsonResponse

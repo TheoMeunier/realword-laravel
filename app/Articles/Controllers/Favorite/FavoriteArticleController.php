@@ -6,6 +6,7 @@ namespace App\Articles\Controllers\Favorite;
 
 use App\Articles\Actions\Favorites\FavoriteArticleAction;
 use App\Articles\Resources\ArticleResource;
+use App\Core\Exceptions\NotFoundException;
 
 readonly class FavoriteArticleController
 {
@@ -13,8 +14,13 @@ readonly class FavoriteArticleController
         private FavoriteArticleAction $favoriteArticleAction
     ) {}
 
+    /**
+     * @throws NotFoundException
+     */
     public function favorite(string $slug): ArticleResource
     {
+        throw_unless(auth()->user(), NotFoundException::class);
+
         return $this->favoriteArticleAction->handle($slug, auth()->user());
     }
 }

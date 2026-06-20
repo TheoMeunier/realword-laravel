@@ -12,6 +12,7 @@ class InvalidCredentialsException extends Exception
 {
     protected $message = 'Invalid credentials provided.';
 
+    /** @var int */
     protected $code = 401;
 
     public function render(): JsonResponse

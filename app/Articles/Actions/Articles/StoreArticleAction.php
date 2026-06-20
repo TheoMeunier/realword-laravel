@@ -22,7 +22,7 @@ final class StoreArticleAction
         $article->save();
 
         if ($request->has('article.tagList')) {
-            $tagRows = collect($request->article['tagList'])->map(fn ($tag): array => [
+            $tagRows = collect((array) $request->article['tagList'])->map(fn (string $tag): array => [
                 'title' => $tag,
                 'article_id' => $article->id,
             ])->all();

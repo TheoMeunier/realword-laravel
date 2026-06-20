@@ -30,5 +30,5 @@ jobs:
       - name: Check Pint
         run: ./vendor/bin/pint --test
 
-  #   - name: Check PHPStan
-  #      run: ./vendor/bin/phpstan analyse
+      - name: Check PHPStan
+        run: ./vendor/bin/phpstan analyse

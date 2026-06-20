@@ -7,6 +7,7 @@ namespace App\Articles\Models;
 use App\Auth\Models\User;
 use Database\Factories\ArticleFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -58,17 +59,18 @@ final class Article extends Model
     }
 
     // scope
-    protected function scopeTag($query, $tag)
+
+    protected function scopeTag(Builder $query, ?string $tag): Builder
     {
         return $query->when($tag, fn ($q) => $q->whereHas('tags', fn ($q) => $q->where('title', $tag)));
     }
 
-    protected function scopeByAuthor($query, $username)
+    protected function scopeByAuthor(Builder $query, ?string $username): Builder
     {
         return $query->when($username, fn ($q) => $q->whereHas('author', fn ($q) => $q->where('username', $username)));
     }
 
-    protected function scopeFavoritedBy($query, $username)
+    protected function scopeFavoritedBy(Builder $query, ?string $username): Builder
     {
         return $query->when($username, fn ($q) => $q->whereHas('favorites', fn ($q) => $q->where('username', $username)));
     }

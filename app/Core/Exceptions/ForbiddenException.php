@@ -12,6 +12,7 @@ class ForbiddenException extends Exception
 {
     protected $message = 'You are not authorized to perform this action.';
 
+    /** @var int */
     protected $code = 403;
 
     public function render(): JsonResponse

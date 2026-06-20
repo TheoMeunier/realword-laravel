@@ -7,6 +7,7 @@ namespace App\Auth\Controllers;
 use App\Auth\Actions\UpdateUserAction;
 use App\Auth\Requests\UpdateUserRequest;
 use App\Auth\Resources\UserResource;
+use App\Core\Exceptions\NotFoundException;
 
 readonly class UpdateUserController
 {
@@ -14,6 +15,9 @@ readonly class UpdateUserController
         private UpdateUserAction $updateUserAction
     ) {}
 
+    /**
+     * @throws NotFoundException
+     */
     public function update(UpdateUserRequest $request): UserResource
     {
         return $this->updateUserAction->execute($request);
