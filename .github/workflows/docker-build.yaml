@@ -6,7 +6,7 @@ on:
       - '*'
 
 env:
-  IMAGE_NAME: realword/laravel
+  IMAGE_NAME: tmeunier/realword/laravel
 
 jobs:
   docker-build:
