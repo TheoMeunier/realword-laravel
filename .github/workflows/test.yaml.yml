@@ -31,7 +31,7 @@ jobs:
         uses: php-actions/composer@v6
         with:
           php_version: "8.4"
-          version: 1
+          version: 2
           command: install --prefer-dist --no-progress
 
       - name: Copy .env
