@@ -8,14 +8,14 @@ This codebase was created to demonstrate a real-world backend API built with Lar
 
 ## Tech Stack
 
-| Technology          | Version | Purpose |
-|---------------------|---------|---|
-| PHP                 | 8.5+    | Language |
-| Laravel             | 13.x    | Framework |
-| MySQL / Postgres 17 | —       | Database |
-| Laravel Sanctum     | —       | API token authentication |
-| Eloquent ORM        | —       | Database abstraction |
-| Pest                | 11.x    | Testing |
+| Technology       | Version | Purpose |
+|------------------|---------|---|
+| PHP              | 8.4+    | Language |
+| Laravel          | 13.x    | Framework |
+| Postgres 17 | —       | Database |
+| Laravel Sanctum  | —       | API token authentication |
+| Eloquent ORM     | —       | Database abstraction |
+| Pest             | 4.X     | Testing |
 
 ---
 
@@ -44,33 +44,6 @@ The API is mounted at `/api` and implements the full RealWorld spec:
 | `POST` | `/api/articles/:slug/comments` | Yes | Add comment |
 | `DELETE` | `/api/articles/:slug/comments/:id` | Yes | Delete comment |
 | `GET` | `/api/tags` | No | Get tags |
-
----
-
-## Project Structure
-
-```
-├── app/
-│   ├── Http/
-│   │   ├── Controllers/       # API controllers (Articles, Auth, Comments, Profiles, Tags, Users)
-│   │   ├── Middleware/        # Auth middleware (token extraction & validation)
-│   │   └── Requests/          # Form request validation classes
-│   ├── Models/                # Eloquent models (User, Article, Comment, Tag)
-│   └── Providers/             # Service providers
-├── config/                    # Laravel config files (including CORS, auth, sanctum)
-├── database/
-│   ├── migrations/            # Database schema migrations
-│   └── seeders/               # Optional seeders for test data
-├── routes/
-│   └── api.php                # All API route definitions
-├── tests/
-│   ├── Feature/               # Feature (integration) tests per endpoint group
-│   └── Unit/                  # Unit tests
-├── .env.example               # Example environment configuration
-├── artisan                    # Laravel CLI entry point
-├── composer.json              # PHP dependencies
-└── phpunit.xml                # PHPUnit configuration
-```
 
 ---
 
@@ -105,46 +78,7 @@ cp .env.example .env
 php artisan key:generate
 ```
 
-Open `.env` and update the database connection details:
-
-```dotenv
-DB_CONNECTION=pgsql
-DB_HOST=127.0.0.1
-DB_PORT=5432
-DB_DATABASE=realworld
-DB_USERNAME=your_db_user
-DB_PASSWORD=your_db_password
-```
-
-### 4. Run migrations
-
-```bash
-php artisan migrate
-```
-
-Optionally seed the database with sample data:
-
-```bash
-php artisan db:seed
-```
-
-### 5. Start the development server
-
-```bash
-php artisan serve
-```
-
-The API will be available at **[http://localhost:8888/api](http://localhost:8888/api)**.
-
----
-
-## Authentication
-
-Authentication is handled via **Bearer tokens** (Laravel Sanctum). To access protected endpoints, include the token returned on login or registration in the `Authorization` header:
-
-```
-Authorization: Token <your_token_here>
-```
+Configuration file `.env`
 
 ---
 
