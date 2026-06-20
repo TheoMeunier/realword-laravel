@@ -26,11 +26,11 @@ lint:  ## code style fix
 
 .PHONY: phpstan
 phpstan:  ## phpstan
-	vendor/bin/phpstan analyse
+	./vendor/bin/phpstan analyse --memory-limit=2G
 
 .PHONY: test
 test:  ## phpstan
-	./vendor/bin/pest
+	php artisan test
 
 ## —— Others 🛠️️ ———————————————————————————————————————————————————————————————
 help: ## listing command
