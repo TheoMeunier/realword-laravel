@@ -46,7 +46,7 @@ jobs:
         run: php artisan key:generate
 
       - name: Generate JWT secret
-        run: php artisan jwt:secret --force
+        run: php artisan jwt:secret --force && cp .env .env.testing
 
       - name: Run migrations
         env:
