@@ -8,14 +8,14 @@ This codebase was created to demonstrate a real-world backend API built with Lar
 
 ## Tech Stack
 
-| Technology       | Version | Purpose |
-|------------------|---------|---|
-| PHP              | 8.4+    | Language |
-| Laravel          | 13.x    | Framework |
-| Postgres 17 | —       | Database |
-| Laravel Sanctum  | —       | API token authentication |
-| Eloquent ORM     | —       | Database abstraction |
-| Pest             | 4.X     | Testing |
+| Technology   | Version | Purpose                      |
+|--------------|---------|------------------------------|
+| PHP          | 8.4+    | Language                     |
+| Laravel      | 13.x    | Framework                    |
+| Postgres 17  | —       | Database                     |
+| Laravel JWT  | —       | API JWT token authentication |
+| Eloquent ORM | —       | Database abstraction         |
+| Pest         | 4.X     | Testing                      |
 
 ---
 
@@ -73,12 +73,12 @@ composer install
 
 ### 3. Set up your environment file
 
-```bash
-cp .env.example .env
-php artisan key:generate
-```
-
 Configuration file `.env`
+
+```bash
+php artisan key:generate
+php artisan jwt:secret
+```
 
 ---
 

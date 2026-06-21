@@ -5,20 +5,17 @@ declare(strict_types=1);
 namespace App\Auth\Services;
 
 use App\Auth\Models\User;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 class AuthJwtService
 {
     public function generateToken(User $user): string
     {
-        $model = User::query()->findOrFail($user->id);
-
-        return $model->createToken('api-token')->plainTextToken;
+        return JWTAuth::fromUser($user);
     }
 
-    public function revokeToken(int $userId): void
+    public function revokeToken(): void
     {
-        $model = User::query()->findOrFail($userId);
-
-        $model->tokens()->delete();
+        JWTAuth::parseToken()->invalidate();
     }
 }
