@@ -9,14 +9,14 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Laravel\Sanctum\HasApiTokens;
+use Tymon\JWTAuth\Contracts\JWTSubject;
 
 #[Fillable(['username', 'email', 'password', 'bio', 'image'])]
 #[Hidden(['password', 'remember_token'])]
-class User extends Authenticatable
+class User extends Authenticatable implements JWTSubject
 {
     /** @use HasFactory<UserFactory> */
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasFactory, Notifiable;
 
     protected static function newFactory(): UserFactory
     {
@@ -44,5 +44,16 @@ class User extends Authenticatable
     public function isFollowing(User $user): bool
     {
         return $this->following()->where('followed_id', $user->id)->exists();
+    }
+
+    public function getJWTIdentifier(): mixed
+    {
+        return $this->getKey();
+    }
+
+    /** @return array<string, mixed> */
+    public function getJWTCustomClaims(): array
+    {
+        return [];
     }
 }

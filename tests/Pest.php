@@ -11,7 +11,7 @@ pest()->extend(TestCase::class)
 function actingAsUser(?User $user = null): User
 {
     $user ??= User::factory()->create();
-    test()->actingAs($user, 'sanctum');
+    test()->actingAs($user, 'api');
 
     return $user;
 }

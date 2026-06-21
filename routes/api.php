@@ -30,7 +30,7 @@ Route::prefix('user')->name('user.')->group(function (): void {
 Route::get('/articles', [ListArticlesController::class, 'list'])->name('list');
 
 // route auth
-Route::middleware('auth:sanctum')->group(function (): void {
+Route::middleware('auth:api')->group(function (): void {
     Route::prefix('user')->name('user.')->group(function (): void {
         Route::get('/', [ShowUserController::class, 'show'])->name('show');
         Route::put('/', [UpdateUserController::class, 'update'])->name('update');

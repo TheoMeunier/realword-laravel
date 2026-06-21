@@ -12,8 +12,8 @@ readonly class LogoutAction
         private AuthJwtService $service
     ) {}
 
-    public function execute(int $userId): void
+    public function execute(): void
     {
-        $this->service->revokeToken($userId);
+        $this->service->revokeToken();
     }
 }

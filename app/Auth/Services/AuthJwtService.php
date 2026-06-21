@@ -5,20 +5,27 @@ declare(strict_types=1);
 namespace App\Auth\Services;
 
 use App\Auth\Models\User;
+use Illuminate\Auth\AuthManager;
+use Tymon\JWTAuth\JWTGuard;
 
-class AuthJwtService
+readonly class AuthJwtService
 {
-    public function generateToken(User $user): string
-    {
-        $model = User::query()->findOrFail($user->id);
+    private JWTGuard $guard;
 
-        return $model->createToken('api-token')->plainTextToken;
+    public function __construct(AuthManager $auth)
+    {
+        /** @var JWTGuard $guard */
+        $guard = $auth->guard('api');
+        $this->guard = $guard;
     }
 
-    public function revokeToken(int $userId): void
+    public function generateToken(User $user): string
     {
-        $model = User::query()->findOrFail($userId);
+        return $this->guard->login($user);
+    }
 
-        $model->tokens()->delete();
+    public function revokeToken(): void
+    {
+        $this->guard->logout();
     }
 }
