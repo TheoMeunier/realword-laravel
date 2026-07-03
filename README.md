@@ -61,7 +61,7 @@ The API is mounted at `/api` and implements the full RealWorld spec:
 ### 1. Clone the repository
 
 ```bash
-git@github.com:TheoMeunier/realworld-laravel.gitcd realworld-api-laravel-13
+git@github.com:TheoMeunier/realworld-laravel.git
 cd realworld-laravel
 ```
 
