@@ -61,8 +61,8 @@ The API is mounted at `/api` and implements the full RealWorld spec:
 ### 1. Clone the repository
 
 ```bash
-git clone https://github.com/TomislavVinkovic/realworld-api-laravel-12.git
-cd realworld-api-laravel-13
+git@github.com:TheoMeunier/realworld-laravel.gitcd realworld-api-laravel-13
+cd realworld-laravel
 ```
 
 ### 2. Install PHP dependencies
@@ -86,7 +86,6 @@ php artisan jwt:secret
 
 - [RealWorld API Spec](https://realworld-docs.netlify.app/docs/specs/backend-specs/introduction)
 - [Laravel 13 Documentation](https://laravel.com/docs/13.x)
-- [Laravel Sanctum](https://laravel.com/docs/12.x/sanctum)
 
 ---
 
